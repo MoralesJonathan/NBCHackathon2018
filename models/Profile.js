@@ -6,116 +6,48 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    handle: {
-        type: String,
-        required: true,
-        max: 40
-    },
-    company: {
-        type: String
-    },
-    website: {
-        type: String
-    },
-    location: {
-        type: String
-    },
-    status: {
+    name: {
         type: String,
         required: true
     },
-    skills: {
-        type: [String],
-        required: true
-    },
-    bio: {
-        type: String,
-        required: false
-    },
-    githubusername: {
-        type: String,
-        required: false
-    },
-    experience: [
-        {
-            title: {
-                type: String,
-                required: true
-            },
-            company: {
-                type: String,
-                required: true
-            },
-            location: {
-                type: String
-            },
-            from: {
-                type: Date,
-                required: true
-            },
-            to: {
-                type: Date
-            },
-            current: {
-                type: Boolean,
-                default: false
-            },
-            description: {
-                type: String
-            }
-
-        }
-    ],
-    education: [
-        {
-            school: {
-                type: String,
-                required: true
-            },
-            degree: {
-                type: String,
-                required: true
-            },
-            fieldostudy: {
-                type: String,
-                required: true
-            },
-            from: {
-                type: Date,
-                required: true
-            },
-            to: {
-                type: Date
-            },
-            current: {
-                type: Boolean,
-                default: false
-            },
-            description: {
-                type: String
-            }
-        }
-    ],
-    social: {
-        youtube: {
-            type: String
-        },
-        twitter: {
-            type: String
-        },
-        linkedin: {
-            type: String
-        },
-        instagram: {
-            type: String
-        },
-        facebook: {
-            type: String
-        }
-    },
-    date: {
+    dateOfBirth: {
         type: Date,
-        default: Date.now
-    }
+        required: false
+    },
+    gender: {
+        type: String,
+        required: false,
+        maxlength : 1
+    },
+    zipCode: {
+        type: Number,
+        required: true,
+        maxlength: 5
+    },
+    phoneNumber: {
+        type: Number,
+        required: false,
+        maxlength: 10
+    },
+    email: {
+        type: String,
+        required: false
+    },
+    streetAddress: {
+        type: String,
+        required: false
+    },
+    city: {
+        type: String,
+        required: false
+    },
+    state: {
+        type: String,
+        required: false,
+        maxlength: 2
+    },
+    
+    interests: [
+    ]
 });
 module.exports = Profile = mongoose.model('profile', ProfileSchema)
