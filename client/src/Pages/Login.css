@@ -6,12 +6,9 @@ canvas {
     z-index: -1;
 }
 
-.loginContainer {
+.loginContainer, .registerContainer {
     position: absolute;
-    top: 50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    width: 30%;
+    top: 25%;
 }
 
 #loginLogo {
@@ -21,6 +18,16 @@ canvas {
     width: 90%;
 }
 
-                
 
-                
+/* 
+  ##Device = Desktops
+*/
+
+  @media (min-width: 1025px) {
+    .loginContainer, .registerContainer {
+        top: 50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        width: 30%;
+    }
+  }

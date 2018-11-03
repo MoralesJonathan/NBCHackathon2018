@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 import API from './utils/API';
 import LandingPage from './Pages/LandingPage';
 
@@ -10,8 +11,9 @@ class App extends Component {
     this.state = {
       isLoggedIn: localStorage.getItem("jwtToken"),
       redirect: false,
-      username: "",
-      password: ""
+      email: "",
+      password: "",
+      name: "",
     }
   }
 
@@ -24,10 +26,34 @@ class App extends Component {
 
   handleLogin = (event) => {
     event.preventDefault();
-    if (this.state.username && this.state.password) {
+    if (this.state.email && this.state.password) {
       API.login({
-        username: this.state.username,
+        email: this.state.email,
         password: this.state.password,
+      }).then(data => { //based on response here either redirect or stay in loggin
+
+        if (data.request.status === 200) {
+          localStorage.setItem('jwtToken', data.data.token);
+          this.setState({ redirect: true })
+          window.location.reload();
+        } else if (data.request.status === 401) {
+          console.log("BAD")
+        }
+      })
+        .catch(err => console.log(err));
+    }
+    else{
+      
+    }
+  }
+
+  handleRegister = (event) => {
+    event.preventDefault();
+    if (this.state.name && this.state.email && this.state.password) {
+      API.register({
+        name: this.state.name,
+        password: this.state.password,
+        email: this.state.email,
       }).then(data => { //based on response here either redirect or stay in loggin
 
         if (data.request.status === 200) {
@@ -56,6 +82,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={() => this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
           <Switch>
             {!this.state.isLoggedIn ? <div><Route exact path="/" render={(props) => (<Login {...props} handleLogin={() => this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
               <Redirect from="/" to="/" /></div> :

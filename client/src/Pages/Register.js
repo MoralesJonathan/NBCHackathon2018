@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Login.css'
-import { Link } from "react-router-dom";
 import Particles from 'react-particles-js';
 
 const particlesOpt = {
@@ -114,7 +113,7 @@ const particlesOpt = {
   "retina_detect": true
 }
 
-class Login extends Component {
+class Register extends Component {
 
   render() {
 
@@ -124,21 +123,22 @@ class Login extends Component {
           <Particles params={particlesOpt} />
         </div>
 
-        <div id="loginArea" className="container jumbotron loginContainer">
+        <div id="RegisterArea" className="container jumbotron registerContainer">
           <form>
             <img id="loginLogo" src={'http://www.nbcumedialabs.com/static/img/logo-dark-1.png'} alt="logo"></img>
             <div className="form-group">
-              <label htmlFor="exampleInputEmail1">email</label>
-              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder="Enter email" />
+              <label htmlFor="exampleInputName1">Name</label>
+              <input type="text" className="form-control" name="name" onChange={this.props.handleInputChange()} placeholder="Full Name" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputEmail1">Email</label>
+              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder="Enter email address" />
             </div>
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
               <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder="Password" />
             </div>
-            <button type="submit" onClick={this.props.handleLogin()} className="btn btn-primary">Login</button>
-            <p style={{float:'right'}}>
-              <Link to='/register'>Sign up</Link>
-            </p>
+            <button type="submit" onClick={this.props.handleRegister()} className="btn btn-primary">Register</button>
           </form>
         </div>
       </div>
@@ -146,4 +146,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;
