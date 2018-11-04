@@ -123,7 +123,7 @@ class BillPage extends Component {
                             </a>
                         </div>
                         <div class="col-6" id="actionButton">
-                            <a href="/takeAction" style={{ 'color': 'inherit' }}>
+                            <a href={`/takeaction/${this.state.billNumber}`} style={{ 'color': 'inherit' }}>
                                 <p class="text-center"><strong>{translate('takeAction')}</strong></p>
                             </a>
                         </div>
