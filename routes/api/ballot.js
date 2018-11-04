@@ -98,16 +98,25 @@ router.get('/:id', (req, res) => {
         let subjects=parsed.scraped_subjects;
         let urlArr= url.split("/");
         urlArr.splice(urlArr.indexOf('Filed'));
-        urlArr.push('PDF');
+        urlArr.push('Filed','PDF');
         urlArr=urlArr.map(element => {
              return element+'/'
         });
-        const pdf = urlArr.join('');
-        res.status(200).send({
-            pdf,
-            subjects
-        })
-
+        let pdf = urlArr.join('');
+        axios.get(pdf, {
+            mode: 'no-cors',
+            responseType: 'arraybuffer',
+            headers: {
+                contentType : 'text/pdf'
+            }
+            }) .then(response => {
+                pdf = Buffer.from(response.data, 'binary').toString('base64');
+                pdf = 'data:application/pdf;base64,'+pdf
+                res.status(200).send({
+                    pdf,
+                    subjects
+                })
+            })
     })
 })
 
