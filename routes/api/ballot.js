@@ -4,6 +4,14 @@ const cheerio = require('cheerio')
 const router = express.Router();
 const googleKey = require('../../config/keys');
 const axios = require('axios');
+const { Translate } = require('@google-cloud/translate');
+const projectId = googleKey.projectId;
+
+// Instantiates a client
+const translate = new Translate({
+    projectId: projectId,
+    key: googleKey.googleCloud
+});
 
 
 function requestQueue(arr) {
@@ -42,6 +50,25 @@ function finalProcessing(arr) {
     })
 }
 
+function translater(finalResults) {
+    return finalResults.map((element) => {
+        return new Promise((resolve, reject) => {
+            let text = [element["title"], element["summary"]];
+            translate
+                .translate(text, "es")
+                .then(results => {
+                    element["title"] = results[0][0];
+                    element["summary"] = results[0][1];
+                    console.log(results);
+                    resolve(element);
+                })
+                .catch(err => {
+                    console.error('ERROR:', err);
+                    reject(err);
+                });
+        })
+    })
+}
 router.post('/issues', (req, res) => {
     const { state, issues, lang } = req.body;
     console.log(req.body);
@@ -71,14 +98,13 @@ router.post('/issues', (req, res) => {
                     Promise.all(finalProcessing(allResults2))
                         .then((finalResults) => {
                             if (lang) {
-                                finalResults = finalResults.map((element) => {
-                                    for (key in element) {
-                                        element.key = translate(element.key);
-                                    }
-                                    return element
+                                Promise.all(translater(finalResults))
+                                .then((data)=>{
+                                    res.status(200).send(data);
                                 })
+                            }else{
+                            res.status(200).send(finalResults);
                             }
-                            res.status(200).send(finalResults)
                         })
                 })
         }).catch((err) => {

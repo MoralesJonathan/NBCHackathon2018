@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar/Navbar';
 import axios from "axios";
-import { PacmanLoader } from 'react-spinners';
+import { PropagateLoader } from 'react-spinners';
 import './LandingPage.css'
 
 class LandingPage extends Component {
@@ -46,6 +46,12 @@ class LandingPage extends Component {
         return grid
     }
     render() {
+        const transitionOptions = {
+            transitionName: "fade",
+            transitionEnterTimeout: 500,
+            transitionLeaveTimeout: 500
+          }
+      
         return (
             <div>
                 <Navbar />
@@ -65,10 +71,13 @@ class LandingPage extends Component {
                         </div>
                     </div>
                 </div>
-                <PacmanLoader
+                {this.state.loading &&
+                    <div id="loaderBG"> </div>
+                }
+                <PropagateLoader
                         style={{zIndex: 10000}}
                         sizeUnit={"px"}
-                        size={100}
+                        size={15}
                         color={'#123abc'}
                         loading={this.state.loading}
                     />
