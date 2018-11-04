@@ -43,7 +43,7 @@ function finalProcessing(arr) {
 }
 
 router.post('/issues', (req, res) => {
-    const { state, issues } = req.body;
+    const { state, issues, lang } = req.body;
     console.log(req.body);
     const requests = [];
     issues.map((element) => {
@@ -70,17 +70,15 @@ router.post('/issues', (req, res) => {
                     const finalArray = [];
                     Promise.all(finalProcessing(allResults2))
                         .then((finalResults) => {
-                            const spanish = [...finalResults];
-                            spanish.map((element)=>{
-                                for (key in element){
-                                    element.key=translate(element.key);
-                                }
-                            })
-                            const languagePayload = {
-                                english:finalResults,
-                                spanish
+                            if (lang) {
+                                finalResults= finalResults.map((element) => {
+                                    for (key in element) {
+                                        element.key = translate(element.key);
+                                    }
+                                    return element
+                                })
                             }
-                            res.status(200).send(finalResults)
+                            res.status(200).send(languagePayload)
                         })
                 })
         }).catch((err) => {
