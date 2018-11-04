@@ -23,7 +23,11 @@ class LandingPage extends Component {
         window.location.reload();
     }
     componentDidMount() {
-        axios.post("/api/ballot/issues/", { state: 'fl', issues: ['guns', 'healthcare', 'education'] })
+        let options = { state: 'fl', issues: ['guns', 'healthcare', 'education'] };
+        if(localStorage.getItem("language") == "spanish"){
+            options.lang = "es";
+        }
+        axios.post("/api/ballot/issues/", options)
             .then((response) => {
                 console.log(response)
                 this.setState({ featuredBill: response.data[0], loading: false, bills: response.data.splice(1) })
@@ -53,6 +57,7 @@ class LandingPage extends Component {
     }
     saveTitle(bill){
         localStorage.setItem('billTitle', bill.title);
+        localStorage.setItem('billDescription', bill.summary);
         window.location.href = "/bill/" + bill.id;
     }
     render() {

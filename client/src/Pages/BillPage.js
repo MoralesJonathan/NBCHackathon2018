@@ -34,7 +34,8 @@ class BillPage extends Component {
                         axios.get(`/api/ballot/${this.props.match.params.id}`)
                             .then(response => {
                                 let billTitle = localStorage.getItem('billTitle');
-                                this.setState({ pdf: response.data.pdf, loading: false, title: billTitle});
+                                let billDescription = localStorage.getItem('billDescription');
+                                this.setState({ pdf: response.data.pdf, loading: false, title: billTitle, description: billDescription});
                             })
                     })
             })
@@ -73,6 +74,7 @@ class BillPage extends Component {
                     </div>
                     <div class="row">
                         <div class="col-sm-12 " id="billDescription">
+                            <p style={{textAlign: "center"}}>{this.state.description}</p>
                             <Document file={this.state.pdf}>
                                 <Page pageNumber={this.state.pageNumber} />
                             </Document>
