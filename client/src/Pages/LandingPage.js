@@ -98,8 +98,8 @@ class LandingPage extends Component {
                 </div>
                 <footer>
                     <div className="container">
-                        <span>Copyright por lo menos</span>
-                        <span style={{ float: 'right' }}>Ya tu sabes inc</span>
+                        <span>Copyright 2018</span>
+                        <span style={{ float: 'right' }}>Made with &hearts; in Miami</span>
                     </div>
                 </footer>
             </div>
