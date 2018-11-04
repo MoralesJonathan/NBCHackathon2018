@@ -28,23 +28,24 @@ router.get('/', authCheck, (req, res) => {
                 return res.status(404).json(errors);
             }
             res.json(profile);
-        })).catch(err=> res.status(404).json(err))
+        })).catch(err => res.status(404).json(err))
 });
 
 router.post('/new', authCheck, (req, res) => {
-    const { address, phoneNumber, dob, interests, language }=req.body;
+    const { address, phoneNumber, dob, interests, language } = req.body;
     const errors = {};
-    User.findOne({ user: req.user.id })
-        .then((user => {
-            const newUser = new Profile({
-                user: user.id,
-                language,
-                interests,
-                dob, 
-                phoneNumber
-            });
-        
-        })).catch(err=> res.status(404).json(err))
+    const newProfile = new Profile({
+        user: req.user.id,
+        address,
+        language,
+        interests,
+        dob,
+        phoneNumber
+    });
+
+    newProfile.save()
+        .then(user => res.status(200).json(user))
+        .catch(err => console.log(err))
 });
 
 
