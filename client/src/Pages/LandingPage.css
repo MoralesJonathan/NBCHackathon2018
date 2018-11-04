@@ -1,0 +1,15 @@
+.navbar-brand {
+    line-height: 3rem;
+}
+
+.btn {
+    margin: 10px;
+}
+
+#landingPageCard {
+    margin-bottom: 50px;
+}
+
+#landingPageCard .card{
+    padding: 50px 25px;
+}
