@@ -102,7 +102,7 @@ class App extends Component {
         <div>
           <Route exact path="/createProfile" render={(props) => (<Profile {...props} handleProfile={() => this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
           <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={() => this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
-          <Route exact path="/bill" render={(props) => (<BillPage {...props} />)} />
+          <Route exact path="/bill/:id" render={(props) => (<BillPage {...props} />)} />
 
           <Switch>
             {this.state.redirectToProfile && <Redirect to='/createProfile'/>}

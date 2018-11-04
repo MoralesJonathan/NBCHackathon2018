@@ -13,6 +13,9 @@ class LandingPage extends Component {
             loading: true
         }
     }
+    createCard(data) {
+        return (<div className="col-md-4 col-12"><div className="card"> <div className="card-body"><h3 className="card-title text-primary">{data.title}</h3>  <p className="card-text card-text-overflow" style={{ 'display': '-webkit-box', '-webkit-line-clamp': '4', '-webkit-box-orient': 'vertical' }}>{data.summary}</p><div className="d-none d-md-block"> <button type="button" className="btn btn-outline-secondary">Ignore</button> <a href={"/bill/" + data.id}><button type="button" className="btn btn-outline-takeAction">View ballot</button> </a></div></div></div></div>);
+    }
     componentDidMount() {
         axios.post("/api/ballot/issues/", { state: 'fl', issues: ['guns', 'healthcare', 'education'] })
             .then((response) => {
@@ -22,9 +25,6 @@ class LandingPage extends Component {
             .catch((error) => {
                 console.log(error);
             });
-    }
-    createCard(data) {
-        return (<div className="col-md-4 col-12"><div className="card"> <div className="card-body"><h1 className="card-title text-primary">{data.title}</h1> <h3 className="card-subtitle mb-2 text-muted">Community bill</h3> <p className="card-text">{data.description}</p><div className="d-none d-md-block"> <button type="button" className="btn btn-outline-secondary">Ignore</button> <a href={"/bill/"}><button type="button" className="btn btn-outline-takeAction">Take Action</button> </a></div></div></div></div>);
     }
     loadCards() {
         let cards = [];
@@ -59,7 +59,7 @@ class LandingPage extends Component {
                                     <p className="card-text">{this.state.featuredBill.summary}</p>
                                 </div>
                                 <div className="col-md-4 d-none d-sm-flex">
-                                    <img id="featuredImage" src="https://via.placeholder.com/400x200"></img>
+                                    <img id="featuredImage" src="/voteHeader.png" with="400" height="200"></img>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@ class LandingPage extends Component {
                         loading={this.state.loading}
                     />
                 <div className="container" id="cards-container">
-                 
+
                     {this.loadCards()}
                 </div>
                 <footer>

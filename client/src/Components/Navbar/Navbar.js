@@ -7,7 +7,7 @@ class Navbar extends React.Component {
                     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="/">
                         <img src="/tempLogo.png" style={{ 'margin-right': '15px' }} width="50" height="50" class="d-inline-block align-top" alt="" />
                     Poder Vote
                     </a>
@@ -21,10 +21,10 @@ class Navbar extends React.Component {
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="#">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled" href="#">Disabled</a>
+                                <a class="nav-link" href="#">Settings</a>
                             </li>
                         </ul>
                     </div>

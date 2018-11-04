@@ -78,7 +78,7 @@ router.post('/issues', (req, res) => {
                                     return element
                                 })
                             }
-                            res.status(200).send(languagePayload)
+                            res.status(200).send(finalResults)
                         })
                 })
         }).catch((err) => {
