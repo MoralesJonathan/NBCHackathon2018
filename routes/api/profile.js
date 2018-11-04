@@ -32,7 +32,7 @@ router.get('/', authCheck, (req, res) => {
 });
 
 router.post('/new', authCheck, (req, res) => {
-    const { address, phoneNumber, dob, interest, language }=req.body;
+    const { address, phoneNumber, dob, interests, language }=req.body;
     const errors = {};
     User.findOne({ user: req.user.id })
         .then((user => {
@@ -41,8 +41,7 @@ router.post('/new', authCheck, (req, res) => {
                 language,
                 interests,
                 dob, 
-                phoneNumber, 
-                
+                phoneNumber
             });
         
         })).catch(err=> res.status(404).json(err))

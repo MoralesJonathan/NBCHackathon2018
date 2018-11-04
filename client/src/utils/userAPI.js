@@ -20,8 +20,6 @@ export default {
     });
   },
   setProfile: function(userData) {
-    return new Promise((resolve, reject) => {
-      resolve({profile: {name: "pepe", address: "no se, 33183"}})
-    });
+    return axios.post("/api/profile/new")
   }
 };
