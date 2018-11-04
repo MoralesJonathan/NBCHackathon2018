@@ -98,7 +98,7 @@ router.get('/:id', (req, res) => {
         let subjects=parsed.scraped_subjects;
         let urlArr= url.split("/");
         urlArr.splice(urlArr.indexOf('Filed'));
-        urlArr.push('PDF');
+        urlArr.push('Filed','PDF');
         urlArr=urlArr.map(element => {
              return element+'/'
         });
