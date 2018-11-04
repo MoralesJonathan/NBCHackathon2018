@@ -30,6 +30,8 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.7",
     "passport": "^0.4.0",
+    "react-autocomplete": "^1.8.1",
+    "request": "^2.88.0",
     "validator": "^10.5.0"
   },
   "devDependencies": {
