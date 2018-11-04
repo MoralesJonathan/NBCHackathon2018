@@ -128,12 +128,21 @@ router.get('/:id', (req, res) => {
         urlArr=urlArr.map(element => {
              return element+'/'
         });
-        const pdf = urlArr.join('');
-        res.status(200).send({
-            pdf,
-            subjects
-        })
-
+        let pdf = urlArr.join('');
+        axios.get(pdf, {
+            mode: 'no-cors',
+            responseType: 'arraybuffer',
+            headers: {
+                contentType : 'text/pdf'
+            }
+            }) .then(response => {
+                pdf = Buffer.from(response.data, 'binary').toString('base64');
+                pdf = 'data:application/pdf;base64,'+pdf
+                res.status(200).send({
+                    pdf,
+                    subjects
+                })
+            })
     })
 })
 

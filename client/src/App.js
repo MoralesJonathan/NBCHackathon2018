@@ -5,11 +5,14 @@ import Register from './Pages/Register';
 import BillPage from './Pages/BillPage';
 import Profile from './Pages/Profile';
 import API from './utils/userAPI';
+import labelsService from './utils/labelsService';
 import LandingPage from './Pages/LandingPage';
 
 class App extends Component {
   constructor(props) {
     super(props)
+    const language = localStorage.getItem("language") || 'english';
+    const address = localStorage.getItem("address") || '33183';
     this.state = {
       isLoggedIn: localStorage.getItem("jwtToken"),
       redirectToProfile: false,
@@ -17,32 +20,51 @@ class App extends Component {
       email: "",
       password: "",
       name: "",
-      profile: {},
+      errMsg: "",
+      profile: {
+        language,
+        address
+      },
     };
     this.handleRegister = this.handleRegister.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
+    this.onUserAuth = this.onUserAuth.bind(this);
+    this.onUserProfile = this.onUserProfile.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.switchLanguage = this.switchLanguage.bind(this);
+    this.translate = this.translate.bind(this);
+    labelsService.setLanguage(language);
   }
 
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
+      errMsg: '',
     });
   };
 
+  translate(labelName) {
+    return labelsService.translate(labelName);
+  }
+
   onUserAuth(res) {
-    if (res.request.status === 200 || res.request.status === 201) {
+    if (res && res.request.status === 200 || res.request.status === 201) {
       localStorage.setItem('jwtToken', res.data.token);
       API.setAuthToken(res.data.token);
-      API.getProfile().then(this.onUserProfile);
+      API.getProfile().then(this.onUserProfile).catch(e => {
+        console.log('error on user Login');
+        this.setState({ redirectToProfile: true });
+      });
     } else if (res.request.status === 401) {
       console.log("BAD");
     }
   }
-
+  
   onUserProfile(res) {
-    if (res.request.status === 200 || res.request.status === 201) {
-      this.setState({ redirect: true, profile: res.data.profile });
+    console.log('res ', res);
+    if (res && res.data && res.request && (res.request.status === 200 || res.request.status === 201)) {
+      this.setState({ redirect: true, profile: res.data });
       window.location.reload();
     }
     else {
@@ -50,16 +72,24 @@ class App extends Component {
     }
   }
 
-  handleLogin = (event) => {
-    event.preventDefault();
+  handleLogin = (evt) => {
+    evt && evt.preventDefault && evt.preventDefault();
     if (this.state.email && this.state.password) {
       API.login({
         email: this.state.email,
         password: this.state.password,
-      }).then(this.onUserAuth).catch(err => console.log(err) && alert("Server Error on Login"));
+      }).then(this.onUserAuth).catch(err => {
+        console.log(err);
+        if (err && err.response && err.response.data && err.response.data.user) {
+          this.setState({errMsg: err.response.data.user})
+        }
+        if (err && err.response && err.response.data && err.response.data.password) {
+          this.setState({errMsg: err.response.data.password})
+        }
+      });
     }
     else{
-      alert("Invalid form information")
+      this.setState({errMsg: "Missing email or password"});
     }
   }
 
@@ -70,23 +100,37 @@ class App extends Component {
         name: this.state.name,
         password: this.state.password,
         email: this.state.email,
-      }).then(this.onUserAuth).catch(err => console.log(err) && alert("Server Error on Sign Up"));
+      }).then(this.handleLogin).catch(err => {
+        console.log(err);
+        if (err && err.response && err.response.data && err.response.data.password) {
+          this.setState({errMsg: err.response.data.password})
+        }
+        if (err && err.response && err.response.data && err.response.data.email) {
+          this.setState({errMsg: err.response.data.email})
+        }
+      });
     }
-    else{
-      alert("Invalid form information")
+    else {
+      this.setState({errMsg: 'Missing required information'})
     }
+  }
+
+  switchLanguage(newLanguage) {
+    labelsService.setLanguage(newLanguage);
   }
 
   handleProfile = (profileInfo) => {
     console.log('profileInfo: ', profileInfo);
-    // if (profileInfo.address && profileInfo.zipCode && profileInfo.interests) {
-    //   API.setProfile(profileInfo).then(res => {
-
-    //   }).catch(err => console.log(err) && alert("Server Error on Sign Up"));
-    // }
-    // else{
-    //   alert("Invalid form information")
-    // }
+    if (profileInfo.address && profileInfo.language) {
+      localStorage.setItem('address',profileInfo.address);
+      localStorage.setItem('language',profileInfo.language);
+      API.setProfile(profileInfo).then(res => {
+        this.setState({profile: profileInfo, isLoggedIn: true, redirectToProfile: false});
+      }).catch(err => console.log(err));
+    }
+    else{
+      alert("Address and language are required fields");
+    }
   }
 
   setRedirect = () => {
@@ -100,18 +144,16 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/createProfile" render={(props) => (<Profile {...props} handleProfile={() => this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
-          <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={() => this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
-          <Route exact path="/bill/:id" render={(props) => (<BillPage {...props} />)} />
-
+          <Route exact path="/createProfile" render={(props) => (<Profile {...props} switchLanguage={this.switchLanguage} translate={this.translate} handleProfile={this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/register" render={(props) => (<Register {...props} errMsg={this.state.errMsg} translate={this.translate} handleRegister={this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/bill/:id" render={(props) => (<BillPage translate={this.translate} {...props} />)} />
+          <Route exact path="/bill" render={(props) => (<BillPage translate={this.translate} {...props} />)} />
+          <Route exact path="/home" render={(props) => (<LandingPage {...props} translate={this.translate} />)} />
+          <Route exact path="/" render={(props) => (<Login {...props} errMsg={this.state.errMsg} translate={this.translate} handleLogin={this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
           <Switch>
             {this.state.redirectToProfile && <Redirect to='/createProfile'/>}
-            {!this.state.isLoggedIn ? <div><Route exact path="/" render={(props) => (<Login {...props} handleLogin={() => this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
-              <Redirect from="/" to="/" /></div> :
-              <div>
-                <Route exact path="/" component={LandingPage} />
-                {/* <Redirect from="/" to="/dashboard" /> */}
-              </div>}
+            {this.state.isLoggedIn && <Redirect to="/home" />}
+            {!this.state.isLoggedIn && <Redirect to="/" />}
           </Switch>
         </div>
       </Router>
