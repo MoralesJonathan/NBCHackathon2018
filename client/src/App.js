@@ -11,6 +11,8 @@ import LandingPage from './Pages/LandingPage';
 class App extends Component {
   constructor(props) {
     super(props)
+    const language = localStorage.getItem("language") || 'english';
+    const address = localStorage.getItem("address") || '33183';
     this.state = {
       isLoggedIn: localStorage.getItem("jwtToken"),
       redirectToProfile: false,
@@ -19,7 +21,10 @@ class App extends Component {
       password: "",
       name: "",
       errMsg: "",
-      profile: {},
+      profile: {
+        language,
+        address
+      },
     };
     this.handleRegister = this.handleRegister.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
@@ -28,6 +33,7 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.switchLanguage = this.switchLanguage.bind(this);
     this.translate = this.translate.bind(this);
+    labelsService.setLanguage(language);
   }
 
   handleInputChange = event => {
@@ -116,6 +122,8 @@ class App extends Component {
   handleProfile = (profileInfo) => {
     console.log('profileInfo: ', profileInfo);
     if (profileInfo.address && profileInfo.dob) {
+      localStorage.setItem('address',profileInfo.address);
+      localStorage.setItem('language',profileInfo.language);
       API.setProfile(profileInfo).then(res => {
         this.setState({profile: profileInfo, isLoggedIn: true, redirectToProfile: false});
       }).catch(err => console.log(err));
