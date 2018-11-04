@@ -118,7 +118,7 @@ class App extends Component {
     if (profileInfo.address && profileInfo.dob) {
       API.setProfile(profileInfo).then(res => {
         this.setState({profile: profileInfo, isLoggedIn: true, redirectToProfile: false});
-      }).catch(err => console.log(err) && alert("Server Error on Sign Up"));
+      }).catch(err => console.log(err));
     }
     else{
       alert("Address and date of birth are required fields");
