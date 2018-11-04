@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import Autocomplete from 'react-autocomplete';
 import locationAPI from '../utils/locationAPI';
+import DatePicker from "react-datepicker";
+import moment from "moment"; 
+import "react-datepicker/dist/react-datepicker.css";
+import Select from 'react-select';
 
-const interestsOptions = {
-
-}
+const interestsOptions = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+];
 
 class Profile extends Component {
 
@@ -12,7 +18,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       address: '',
-      dob: '',
+      dob: moment().subtract(21, 'years'),
       language: 'en',
       interests: [],
       addressOpts: [],
@@ -21,17 +27,20 @@ class Profile extends Component {
     this.getGoogleAddress = this.getGoogleAddress.bind(this);
     this.setAddress = this.setAddress.bind(this);
     this.setAddressFromGeoloc = this.setAddressFromGeoloc.bind(this);
+    this.interestsChanges = this.interestsChanges.bind(this);
   }
 
   getGoogleAddress() {
-    console.log('getGoogleAddress');
     locationAPI.getLocationFromAddress(this.state.address).then(this.setOptions);
+  }
+
+  interestsChanges(opt) {
+    console.log(opt);
   }
 
   setAddressFromGeoloc(evt) {
     evt.preventDefault();
     navigator.geolocation.getCurrentPosition((pos) => {
-      console.log('coords ', pos.coords);
       locationAPI.getLocationFromGeoLocation(pos.coords).then((res) => {
         if(Array.isArray(res.data.results) && res.data.results.length > 0) {
           this.setState({address: res.data.results[0].formatted_address});
@@ -43,18 +52,14 @@ class Profile extends Component {
 
   setOptions(res) {
     let options = [];
-    console.log('setOptions');
     if (Array.isArray(res.data.results) && res.data.results.length > 0) {
       options = res.data.results.map(opt => opt.formatted_address);
     }
-    console.log('res: ', options);
     this.setState({addressOpts: options});
   }
 
   setAddress(address) {
-    console.log(address);
     this.setState({address}, () => {
-      console.log('after setState address');
       this.getGoogleAddress();
     });
   }
@@ -86,12 +91,22 @@ class Profile extends Component {
               </button>
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputEmail1">Email</label>
-              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder="Enter email address" />
+              <label htmlFor="exampleInputEmail1">Date of Birth</label>
+              <DatePicker
+                className='dob-datepicker'
+                selected={this.state.dob}
+                onChange={(date) => this.setState({dob: date})}
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Password</label>
-              <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder="Password" />
+              <label htmlFor="exampleInputPassword1">Interests</label>
+              <Select
+                value={this.state.interests}
+                onChange={this.interestsChanges}
+                options={interestsOptions}
+                isMulti
+                isSearchable
+              />
             </div>
             <button type="submit" onClick={this.props.handleProfile()} className="btn btn-primary">Register</button>
           </form>
