@@ -7,9 +7,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 
 const interestsOptions = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
+  { value: 'republican', label: 'Republican' },
+  { value: 'democrat', label: 'Democrat' },
+  { value: 'tax', label: 'Low Taxes' },
+  { value: 'welfare', label: 'Social Welfare' },
+  { value: 'education', label: 'Education' },
+  { value: 'gun', label: 'Gun Baning' },
+  { value: 'social', label: 'Social Security' },
+  { value: 'retirement', label: 'Retirement' },
 ];
 
 class Profile extends Component {
@@ -18,7 +23,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       address: '',
-      dob: moment().subtract(21, 'years'),
+      dob: null,
       language: 'en',
       interests: [],
       addressOpts: [],
@@ -28,6 +33,19 @@ class Profile extends Component {
     this.setAddress = this.setAddress.bind(this);
     this.setAddressFromGeoloc = this.setAddressFromGeoloc.bind(this);
     this.interestsChanges = this.interestsChanges.bind(this);
+    this.submit = this.submit.bind(this);
+  }
+
+  submit(evt) {
+    evt.preventDefault();
+    const dob = this.state.dob && this.state.dob.format('MM/DD/YYYY');
+    const profileInfo = {
+      address: this.state.address,
+      language: 'en',
+      interests: this.state.interests.map(i => i.value),
+      dob,
+    }
+    this.props.handleProfile(profileInfo);
   }
 
   getGoogleAddress() {
@@ -35,7 +53,7 @@ class Profile extends Component {
   }
 
   interestsChanges(opt) {
-    console.log(opt);
+    this.setState({ interests: opt });
   }
 
   setAddressFromGeoloc(evt) {
@@ -87,7 +105,7 @@ class Profile extends Component {
                 onSelect={this.setAddress}
               />
               <button className="btn search-address" onClick={this.setAddressFromGeoloc} style={{padding: 0}}>
-                <img height='34px' src='https://upload.wikimedia.org/wikipedia/commons/f/f8/Ic_my_location_48px.svg' />
+                <img height='24px' src='https://upload.wikimedia.org/wikipedia/commons/f/f8/Ic_my_location_48px.svg' />
               </button>
             </div>
             <div className="form-group">
@@ -95,6 +113,7 @@ class Profile extends Component {
               <DatePicker
                 className='dob-datepicker'
                 selected={this.state.dob}
+                placeholderText="mm/dd/yyyy"
                 onChange={(date) => this.setState({dob: date})}
               />
             </div>
@@ -108,7 +127,7 @@ class Profile extends Component {
                 isSearchable
               />
             </div>
-            <button type="submit" onClick={this.props.handleProfile()} className="btn btn-primary">Register</button>
+            <button type="submit" onClick={this.submit} className="btn btn-primary">Continue</button>
           </form>
         </div>
       </div>

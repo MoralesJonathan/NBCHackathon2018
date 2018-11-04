@@ -17,7 +17,9 @@ class App extends Component {
       password: "",
       name: "",
       profile: {},
-    }
+    };
+    this.handleRegister = this.handleRegister.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
   handleInputChange = event => {
@@ -28,17 +30,17 @@ class App extends Component {
   };
 
   onUserAuth(res) {
-    if (res.request.status === 200) {
+    if (res.request.status === 200 || res.request.status === 201) {
       localStorage.setItem('jwtToken', res.data.token);
       API.setAuthToken(res.data.token);
-      API.getProfile().then(this.onUserProfile)
+      API.getProfile().then(this.onUserProfile);
     } else if (res.request.status === 401) {
       console.log("BAD");
     }
   }
 
   onUserProfile(res) {
-    if (res.request.status === 200) {
+    if (res.request.status === 200 || res.request.status === 201) {
       this.setState({ redirect: true, profile: res.data.profile });
       window.location.reload();
     }
@@ -60,8 +62,8 @@ class App extends Component {
     }
   }
 
-  handleRegister = (event) => {
-    event.preventDefault();
+  handleRegister = (evt) => {
+    evt.preventDefault();
     if (this.state.name && this.state.email && this.state.password) {
       API.register({
         name: this.state.name,
@@ -75,14 +77,15 @@ class App extends Component {
   }
 
   handleProfile = (profileInfo) => {
-    if (profileInfo.address && profileInfo.zipCode && profileInfo.interests) {
-      API.setProfile(profileInfo).then(res => {
+    console.log('profileInfo: ', profileInfo);
+    // if (profileInfo.address && profileInfo.zipCode && profileInfo.interests) {
+    //   API.setProfile(profileInfo).then(res => {
 
-      }).catch(err => console.log(err) && alert("Server Error on Sign Up"));
-    }
-    else{
-      alert("Invalid form information")
-    }
+    //   }).catch(err => console.log(err) && alert("Server Error on Sign Up"));
+    // }
+    // else{
+    //   alert("Invalid form information")
+    // }
   }
 
   setRedirect = () => {
@@ -96,8 +99,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/createProfile" render={(props) => (<Profile {...props} handleProfile={() => this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
-          <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={() => this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/createProfile" render={(props) => (<Profile {...props} handleProfile={this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
           <Switch>
             {this.state.redirectToProfile && <Redirect to='/createProfile'/>}
             {!this.state.isLoggedIn ? <div><Route exact path="/" render={(props) => (<Login {...props} handleLogin={() => this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
