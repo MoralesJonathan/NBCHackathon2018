@@ -28,3 +28,25 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.css-1eitjko {
+    position: fixed!important;
+    top: 50%;
+    left: 50%;
+    z-index: 99999999;
+}
+.css-1eitjko:after {
+    content: "LOADING...";
+    position: absolute;
+    top: 40px;
+    left: -25px;
+}
+
+#loaderBG {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: white;
+    z-index: 9999999;
+}
