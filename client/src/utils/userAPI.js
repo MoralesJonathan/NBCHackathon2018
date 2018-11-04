@@ -14,12 +14,10 @@ export default {
   register: function (loginData) {
     return axios.post("/api/users/register/", loginData)
   },
-  getProfile: function(profile) {
-    return new Promise((resolve, reject) => {
-      axios.post("/api/profile/", {...profile, json: true});
-    });
+  setProfile: function(profile) {
+    return axios.post("/api/profile/new/", {...profile, json: true});
   },
-  setProfile: function(userData) {
-    return axios.post("/api/profile/new")
+  getProfile: function() {
+    return axios.get("/api/profile/")
   }
 };

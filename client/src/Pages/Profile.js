@@ -30,7 +30,7 @@ class Profile extends Component {
 
   submit(evt) {
     evt.preventDefault();
-    const dob = this.state.dob && this.state.dob.format(this.props.translate('dateFormat'));
+    const dob = this.state.dob && this.state.dob.unix();
     const profileInfo = {
       address: this.state.address,
       phoneNumber: this.state.phoneNumber,
@@ -59,6 +59,7 @@ class Profile extends Component {
     evt.preventDefault();
     navigator.geolocation.getCurrentPosition((pos) => {
       locationAPI.getLocationFromGeoLocation(pos.coords).then((res) => {
+        console.log('res: ', res);
         if(Array.isArray(res.data.results) && res.data.results.length > 0) {
           this.setState({address: res.data.results[0].formatted_address});
           this.setOptions(res);
@@ -68,6 +69,7 @@ class Profile extends Component {
   }
 
   setOptions(res) {
+    console.log('res: ', res);
     let options = [];
     if (Array.isArray(res.data.results) && res.data.results.length > 0) {
       options = res.data.results.map(opt => opt.formatted_address);
