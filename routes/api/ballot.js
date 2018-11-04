@@ -30,6 +30,7 @@ function finalProcessing(arr) {
                 url: parsed.sources[0].url,
                 summary: ''
             }
+            console.log(payload.url);
             axios.get(payload.url).then((result) => {
                 let $ = cheerio.load(result.data);
                 const summary = $('.width80').text();
@@ -69,6 +70,16 @@ router.post('/issues', (req, res) => {
                     const finalArray = [];
                     Promise.all(finalProcessing(allResults2))
                         .then((finalResults) => {
+                            const spanish = [...finalResults];
+                            spanish.map((element)=>{
+                                for (key in element){
+                                    element.key=translate(element.key);
+                                }
+                            })
+                            const languagePayload = {
+                                english:finalResults,
+                                spanish
+                            }
                             res.status(200).send(finalResults)
                         })
                 })
