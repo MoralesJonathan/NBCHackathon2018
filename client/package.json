@@ -5,6 +5,7 @@
   "proxy": "http://localhost:5001/",
   "dependencies": {
     "axios": "^0.18.0",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.22.2",
     "react": "^16.6.0",
     "react-autocomplete": "^1.8.1",
@@ -15,8 +16,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1",
-    "react-switch": "^3.0.4",
-    "react-spinners": "^0.4.7"
+    "react-spinners": "^0.4.7",
+    "react-switch": "^3.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
