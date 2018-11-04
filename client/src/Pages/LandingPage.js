@@ -12,9 +12,15 @@ class LandingPage extends Component {
             bills: [],
             loading: true
         }
+        this.onLogout = this.onLogout.bind(this);
     }
     createCard(data) {
         return (<div className="col-md-4 col-12"><div className="card"> <div className="card-body"><h3 className="card-title text-primary">{data.title}</h3>  <p className="card-text card-text-overflow" style={{ 'display': '-webkit-box', '-webkit-line-clamp': '4', '-webkit-box-orient': 'vertical' }}>{data.summary}</p><div className="d-none d-md-block"> <button type="button" className="btn btn-outline-secondary">Ignore</button> <a href={"/bill/" + data.id}><button type="button" className="btn btn-outline-takeAction">View ballot</button> </a></div></div></div></div>);
+    }
+    onLogout(evt) {
+        evt.preventDefault();
+        localStorage.removeItem("jwtToken");
+        window.location.reload();
     }
     componentDidMount() {
         axios.post("/api/ballot/issues/", { state: 'fl', issues: ['guns', 'healthcare', 'education'] })
@@ -54,7 +60,7 @@ class LandingPage extends Component {
       
         return (
             <div>
-                <Navbar />
+                <Navbar logout={this.onLogout}/>
                 <div id="landingPageCard">
                     <div className="card">
                         <div className="card-body">

@@ -116,7 +116,7 @@ const particlesOpt = {
 class Register extends Component {
 
   render() {
-
+    const translate = this.props.translate;
     return (
       <div>
         <div id="particlesArea">
@@ -127,18 +127,19 @@ class Register extends Component {
           <form>
             <img id="loginLogo" src={'http://www.nbcumedialabs.com/static/img/logo-dark-1.png'} alt="logo"></img>
             <div className="form-group">
-              <label htmlFor="exampleInputName1">Name</label>
-              <input type="text" className="form-control" name="name" onChange={this.props.handleInputChange()} placeholder="Full Name" />
+              <label htmlFor="exampleInputName1">{translate('name')}</label>
+              <input type="text" className="form-control" name="name" onChange={this.props.handleInputChange()} placeholder={translate('fullName')} />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputEmail1">Email</label>
-              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder="Enter email address" />
+              <label htmlFor="exampleInputEmail1">{translate('email')}</label>
+              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder={translate('emailPlaceholder')} />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Password</label>
-              <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder="Password" />
+              <label htmlFor="exampleInputPassword1">{translate('password')}</label>
+              <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder={translate('password')} />
             </div>
-            <button type="submit" onClick={this.props.handleRegister} className="btn btn-primary">Register</button>
+            {this.props.errMsg && <div style={{marginBottom: '18px'}}><span className='err-msg'>* {this.props.errMsg}</span></div>}
+            <button type="submit" onClick={this.props.handleRegister} className="btn btn-primary btn--no-margin">{translate('register')}</button>
           </form>
         </div>
       </div>

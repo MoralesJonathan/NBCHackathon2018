@@ -52,6 +52,7 @@ class BillPage extends Component {
         this.setState({ pageNumber: PageNumber })
     }
     render() {
+        const translate = this.props.translate;
         return (
             <div>
                 <Navbar />
@@ -118,12 +119,12 @@ class BillPage extends Component {
                     <div class="row">
                         <div class="col-6" id="ignoreButton">
                             <a href="/" style={{ 'color': 'inherit' }}>
-                                <p class="text-center"><strong>Ignore</strong></p>
+                                <p class="text-center"><strong>{translate('ignore')}</strong></p>
                             </a>
                         </div>
                         <div class="col-6" id="actionButton">
                             <a href="/takeAction" style={{ 'color': 'inherit' }}>
-                                <p class="text-center"><strong>Take action</strong></p>
+                                <p class="text-center"><strong>{translate('takeAction')}</strong></p>
                             </a>
                         </div>
                     </div>
