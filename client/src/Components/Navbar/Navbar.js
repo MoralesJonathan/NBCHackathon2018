@@ -13,7 +13,7 @@ class Navbar extends React.Component {
                     </a>
                     <form className="form-inline d-none d-lg-block">
                         <button className="btn btn-outline-secondary my-2 my-sm-0" type="submit">Settings</button>
-                        <button className="btn btn-outline-primary my-2 my-sm-0" onClick={()=>{
+                        <button className="btn btn-outline-primary my-2 my-sm-0" onClick={(evt)=>{
                             evt.preventDefault();
                             localStorage.removeItem("jwtToken");
                             window.location.reload();

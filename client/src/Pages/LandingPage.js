@@ -52,12 +52,13 @@ class LandingPage extends Component {
         return grid
     }
     render() {
+        const translate = this.props.translate;
         const transitionOptions = {
             transitionName: "fade",
             transitionEnterTimeout: 500,
             transitionLeaveTimeout: 500
           }
-      
+          
         return (
             <div>
                 <Navbar logout={this.onLogout}/>
@@ -67,7 +68,7 @@ class LandingPage extends Component {
                             <div className="row">
                                 <div className="col-md-8 col-12">
                                     <h1 className="card-title text-featured">{this.state.featuredBill.title}</h1>
-                                    <h3 className="card-subtitle mb-2 text-subfeatured">Community bill</h3>
+                                    <h3 className="card-subtitle mb-2 text-subfeatured">{translate('communityBill')}</h3>
                                     <p className="card-text">{this.state.featuredBill.summary}</p>
                                 </div>
                                 <div className="col-md-4 d-none d-sm-flex">
