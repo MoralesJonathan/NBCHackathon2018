@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import BillPage from './Pages/BillPage';
 import Profile from './Pages/Profile';
 import API from './utils/userAPI';
 import LandingPage from './Pages/LandingPage';
@@ -99,8 +100,10 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/createProfile" render={(props) => (<Profile {...props} handleProfile={this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
-          <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/createProfile" render={(props) => (<Profile {...props} handleProfile={() => this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/register" render={(props) => (<Register {...props} handleRegister={() => this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/bill" render={(props) => (<BillPage {...props} />)} />
+
           <Switch>
             {this.state.redirectToProfile && <Redirect to='/createProfile'/>}
             {!this.state.isLoggedIn ? <div><Route exact path="/" render={(props) => (<Login {...props} handleLogin={() => this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
