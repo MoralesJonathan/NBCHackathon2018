@@ -17,7 +17,7 @@ class BillPage extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar />
                 <div class="container" id="billInfo">
                     <div class="row justify-content-sm-center">
                         <div class="col-sm-12 ">
@@ -26,7 +26,7 @@ class BillPage extends Component {
                     </div>
                     <div class="row justify-content-sm-center">
                         <div class="col-sm-12 ">
-                            <h3 class="text-center">{this.state.billNumber}</h3>
+                            <h3 class="text-center">#{this.state.billNumber}</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -41,22 +41,42 @@ class BillPage extends Component {
                         </div>
                         <div class="col-sm-6">
                             <h5>In the media:</h5>
-                            <p>Not yet...</p>
-                        </div>
-                    </div>
-                </div>
-                <footer class="footer">
-                        <div class="row">
-                            <div class="col-sm-6" id="ignoreButton">
-                                <p class="text-center">Ignore</p>
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="https://via.placeholder.com/200x100" alt="First slide"/>
+    </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="https://via.placeholder.com/200x100" alt="Second slide"/>
+    </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100" src="https://via.placeholder.com/200x100" alt="Third slide"/>
+    </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-6" id="actionButton">
-                                <p class="text-center">Take action</p>
-                            </div>
+                            <footer class="footer">
+                                <div class="row">
+                                    <div class="col-6" id="ignoreButton">
+                                        <p class="text-center"><strong>Ignore</strong></p>
+                                    </div>
+                                    <div class="col-6" id="actionButton">
+                                        <p class="text-center"><strong>Take action</strong></p>
+                                    </div>
+                                </div>
+                            </footer>
                         </div>
-                    </footer>
-            </div>
-        );
-    }
-}
+                        );
+                    }
+                }
 export default BillPage;

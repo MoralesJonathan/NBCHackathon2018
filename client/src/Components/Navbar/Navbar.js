@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 class Navbar extends React.Component {
     render () {
         return (
-                <nav class="navbar navbar-light bg-light">
+                <nav class="navbar navbar-light">
                     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand" href="#">
-                        <img src="https://via.placeholder.com/50" style={{ 'margin-right': '15px' }} width="50" height="50" class="d-inline-block align-top" alt="" />
-                        Company Name
+                        <img src="/tempLogo.png" style={{ 'margin-right': '15px' }} width="50" height="50" class="d-inline-block align-top" alt="" />
+                    Poder Vote
                     </a>
                     <form class="form-inline d-none d-lg-block">
                         <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Settings</button>

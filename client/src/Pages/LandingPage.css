@@ -12,4 +12,14 @@
 
 #landingPageCard .card{
     padding: 50px 25px;
+    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    border: none;
+}
+
+#landingPageCard .card .card-text {
+    color: white
+}
+
+.card {
+    margin: 15px 0;
 }
