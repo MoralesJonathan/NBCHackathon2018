@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const mongoSanitize = require('express-mongo-sanitize');
-const { posts, profile, users } = require('./routes/api');
+const { posts, profile, users, legislator} = require('./routes/api');
 
 
 // Base requirements
 const app = express();
-const PORT = process.env.port || 5001;
+const PORT = process.env.port || 5001; 
 
 // MiddleWares
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,6 +27,7 @@ app.use('/api/users', users);
 // Use routes
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+app.use('/api/legislator',legislator)
 
 // Listen on the port
 app.listen(PORT, () => {
