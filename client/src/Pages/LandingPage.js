@@ -30,6 +30,20 @@ class LandingPage extends Component {
         axios.post("/api/ballot/issues/", options)
             .then((response) => {
                 console.log(response)
+                function arrayRemove(arr, value) {
+
+                    return arr.filter(function(ele){
+                        return ele != value;
+                    });
+                 
+                 }
+                for(let x=0; x<response.data.length; x++){
+                    for(let y=0; y<response.data.length; y++){
+                        if(response.data[x].title===response.data[y].title){
+                            response.data.splice(x, 1);
+                        }
+                    }
+                }
                 this.setState({ featuredBill: response.data[0], loading: false, bills: response.data.splice(1) })
             })
             .catch((error) => {

@@ -39,27 +39,6 @@ router.get('/address/:address', (req, res) => {
                         reps: names
                     }
                     res.status(200).send(bigBoy)
-                    // console.log(`https://civicinfoapi.votinginfoproject.org/?&address=${encodeURI(address)}`);
-
-                    //     var options = {
-                    //         url: `https://civicinfoapi.votinginfoproject.org/?&address=${encodeURI(address)}`,
-                    //         headers: {
-                    //             'User-Agent': 'request',
-                    //             'Orgin':'http://localhost:5001'
-                    //         }
-                    //     };
-                    //     request.get(options,
-                    //         (err, response2) => {
-                    //             if (err) { console.log(err); }
-                    //             console.log(response2);
-                    //             const { address, notes, pollingHours } = response2.data.pollingLocations;
-                    //             const bigBoy = {
-                    //                 reps: names,
-                    //                 votingInfo: { address, notes, pollingHours }
-                    //             }
-                    //             res.status(200).send(bigBoy)
-                    //         })
-                    // })
                 })
         })
 });
