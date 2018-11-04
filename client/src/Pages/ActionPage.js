@@ -6,7 +6,9 @@ import './ActionPage.css';
 class ActionPage extends Component {
     constructor(props) {
         super(props);
+        const address = localStorage.getItem("address") ? encodeURI(localStorage.getItem("address")) : '33185';
         this.state = {
+            address: address,
             loading: true,
             reps: [],
             title: "Make hackathons great again",
@@ -14,37 +16,9 @@ class ActionPage extends Component {
         }
     }
     componentDidMount() {
-        let mockResponse = {"reps":[
-            {
-                "name": "Jerry Hill",
-                "photo": "https://senate.ca.gov/sites/senate.ca.gov/files/senator_photos/senator_hill.jpg",
-                "party": "Democratic",
-                "email": "senator.hill@sen.ca.gov",
-                "district": "13"
-            },
-            {
-                "name": "Marc Berman",
-                "photo": "https://assembly.ca.gov/sites/assembly.ca.gov/files/memberphotos/ad24_berman_roster150_20161205.jpg",
-                "party": "Democratic",
-                "email": "assemblymember.berman@assembly.ca.gov",
-                "district": "24"
-            }
-        ],
-            "votingInfo":{
-                
-                "address": {
-                "locationName": "Coral Way K-8 Center",
-                "line1": "1950 SW 13 Ave",
-                "city": "Miami",
-                "state": "FL",
-                "zip": "33145"
-                    },
-            "notes": "Late activation 2pm",
-            "pollingHours": "7:00AM to 7:00PM",
-                }
-        };
-
-        this.setState({reps: mockResponse.reps, loading: false});
+        axios.get(`/api/legislator/address/${this.state.address}`).then((data)=>{
+            this.setState({reps: data.data.reps, loading: false});
+        })
 
     }
     createCard(data){
@@ -55,8 +29,9 @@ class ActionPage extends Component {
                 <div className="card-body">
                     <h3 className="card-title text-primary">{data.name}</h3>  
                     <p className="card-text card-text-overflow" style={{ 'display': '-webkit-box', '-webkit-line-clamp': '4', '-webkit-box-orient': 'vertical' }}>{`${data.party} Party, District ${data.district}`}</p>
-                    <div className="d-none d-md-block">
+                    <div>
                         <a href={`mailto:${data.email}`}><button className="btn btn-outline-takeAction">Email</button></a>
+                        <a href={`mailto:${data.email}`}><button className="btn btn-outline-takeAction">Twitter</button></a>
                     </div>
                 </div>
             </div>
@@ -86,18 +61,18 @@ class ActionPage extends Component {
         return (
             <div>
                 <Navbar />
-                <div class="container" id="billInfo">
+                <div className="container" id="billInfo">
                 {this.state.loading &&
                     <div id="loaderBG"> </div>
                 }
-                    <div class="row justify-content-sm-center">
-                        <div class="col-sm-12 ">
-                            <h1 class="text-center">{this.state.title}</h1>
+                    <div className="row justify-content-sm-center">
+                        <div className="col-sm-12 ">
+                            <h1 className="text-center">{this.state.title}</h1>
                         </div>
                     </div>
-                    <div class="row justify-content-sm-center">
-                        <div class="col-sm-12 ">
-                            <h3 class="text-center">#{this.state.billNumber}</h3>
+                    <div className="row justify-content-sm-center">
+                        <div className="col-sm-12 ">
+                            <h3 className="text-center">#{this.state.billNumber}</h3>
                         </div>
                     </div>
                     {this.LoadRepCards()}

@@ -7,7 +7,7 @@ class Navbar extends React.Component {
                     <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <a className="navbar-brand" href="/">
+                    <a className="navbar-brand" href="/home">
                         <img src="/tempLogo.png" style={{ 'marginRight': '15px' }} width="50" height="50" class="d-inline-block align-top" alt="" />
                     Poder Vote
                     </a>
