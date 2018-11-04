@@ -2,20 +2,10 @@ import React, { Component } from 'react';
 import Autocomplete from 'react-autocomplete';
 import locationAPI from '../utils/locationAPI';
 import DatePicker from "react-datepicker";
+import Switch from "react-switch";
 import moment from "moment"; 
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
-
-const interestsOptions = [
-  { value: 'republican', label: 'Republican' },
-  { value: 'democrat', label: 'Democrat' },
-  { value: 'tax', label: 'Low Taxes' },
-  { value: 'welfare', label: 'Social Welfare' },
-  { value: 'education', label: 'Education' },
-  { value: 'gun', label: 'Gun Baning' },
-  { value: 'social', label: 'Social Security' },
-  { value: 'retirement', label: 'Retirement' },
-];
 
 class Profile extends Component {
 
@@ -23,8 +13,9 @@ class Profile extends Component {
     super(props);
     this.state = {
       address: '',
+      phoneNumber: '',
       dob: null,
-      language: 'en',
+      language: 'english',
       interests: [],
       addressOpts: [],
     }
@@ -33,15 +24,17 @@ class Profile extends Component {
     this.setAddress = this.setAddress.bind(this);
     this.setAddressFromGeoloc = this.setAddressFromGeoloc.bind(this);
     this.interestsChanges = this.interestsChanges.bind(this);
+    this.changeLanguage = this.changeLanguage.bind(this);
     this.submit = this.submit.bind(this);
   }
 
   submit(evt) {
     evt.preventDefault();
-    const dob = this.state.dob && this.state.dob.format('MM/DD/YYYY');
+    const dob = this.state.dob && this.state.dob.format(this.props.translate('dateFormat'));
     const profileInfo = {
       address: this.state.address,
-      language: 'en',
+      phoneNumber: this.state.phoneNumber,
+      language: this.state.language,
       interests: this.state.interests.map(i => i.value),
       dob,
     }
@@ -54,6 +47,12 @@ class Profile extends Component {
 
   interestsChanges(opt) {
     this.setState({ interests: opt });
+  }
+
+  changeLanguage(checked) {
+    let newLanguage = checked ? "english" : "spanish";
+    this.props.switchLanguage(newLanguage);
+    this.setState({language: newLanguage});
   }
 
   setAddressFromGeoloc(evt) {
@@ -83,13 +82,55 @@ class Profile extends Component {
   }
 
   render() {
+    const interestsOptions = [
+      { value: 'republican', label: this.props.translate('republican') },
+      { value: 'democrat', label: this.props.translate('democrat') },
+      { value: 'tax', label: this.props.translate('tax') },
+      { value: 'welfare', label: this.props.translate('welfare') },
+      { value: 'education', label: this.props.translate('education') },
+      { value: 'gun', label: this.props.translate('gun') },
+      { value: 'social', label: this.props.translate('social') },
+      { value: 'retirement', label: this.props.translate('retirement') },
+      { value: 'GlobalWarming', label: this.props.translate('GlobalWarming') },
+      { value: 'GenderEquality', label: this.props.translate('GenderEquality') },
+      { value: 'Culture', label: this.props.translate('Culture') },
+    ];
+    const translate = this.props.translate;
+    const isEnglish = this.state.language === 'english';
     return (
       <div>
         <div id="RegisterArea" className="container jumbotron profileContainer">
           <form>
             <img id="loginLogo" src={'http://www.nbcumedialabs.com/static/img/logo-dark-1.png'} alt="logo"></img>
             <div className="form-group" style={{position:'relative'}}>
-              <label htmlFor="exampleInputName1">Address<sup style={{color:'red'}}>*</sup></label>
+              <label>{translate('language')}</label>
+              <div style={{display: 'flex'}}>
+                <span style={{marginRight: '5px'}} className={isEnglish ? '' : 'selected-language'}>{translate("spanish")}</span>
+                <Switch
+                  checked={isEnglish}
+                  onChange={this.changeLanguage}
+                  onColor="#86d3ff"
+                  offColor="#86d3ff"
+                  onHandleColor="#2693e6"
+                  handleDiameter={30}
+                  uncheckedIcon={false}
+                  checkedIcon={false}
+                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                  activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                  height={20}
+                  width={48}
+                  className="react-switch"
+                  id="material-switch"
+                />
+                <span style={{marginLeft: '5px'}} className={isEnglish ? 'selected-language' : 'normal'}>{translate("english")}</span>
+              </div>
+            </div>
+            <div className="form-group">
+              <label>{translate('telephone')}</label>
+              <input type="tel" className="form-control" name="phone" onChange={evt => this.setState({phoneNumber: evt.target.value})} placeholder={translate('phonePlaceholder')} />
+            </div>
+            <div className="form-group" style={{position:'relative'}}>
+              <label>{translate('address')}<sup style={{color:'red'}}>*</sup></label>
               <Autocomplete
                 getItemValue={(item) => item}
                 items={this.state.addressOpts}
@@ -109,16 +150,17 @@ class Profile extends Component {
               </button>
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputEmail1">Date of Birth</label>
+              <label>{translate('dob')}</label>
               <DatePicker
                 className='dob-datepicker'
                 selected={this.state.dob}
-                placeholderText="mm/dd/yyyy"
+                placeholderText={translate('dateDisplayFormat')}
+                dateFormat={translate('dateFormat')}
                 onChange={(date) => this.setState({dob: date})}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Interests</label>
+              <label>{translate('interests')}</label>
               <Select
                 value={this.state.interests}
                 onChange={this.interestsChanges}
@@ -127,7 +169,7 @@ class Profile extends Component {
                 isSearchable
               />
             </div>
-            <button type="submit" onClick={this.submit} className="btn btn-primary">Continue</button>
+            <button type="submit" onClick={this.submit} className="btn btn-primary">{translate('continue')}</button>
           </form>
         </div>
       </div>

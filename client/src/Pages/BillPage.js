@@ -15,6 +15,7 @@ class BillPage extends Component {
     }
 
     render() {
+        const translate = this.props.translate;
         return (
             <div>
                 <Navbar/>
@@ -36,19 +37,19 @@ class BillPage extends Component {
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <p>Potential Side effects:</p>
+                            <p>{translate('sideEffects')}</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>In the media:</p>
+                            <p>{translate('media')}</p>
                         </div>
                     </div>
                     <footer class="footer">
                         <div class="row">
                             <div class="col-sm-6">
-                                <p class="text-center">Ignore</p>
+                                <p class="text-center">{translate('ignore')}</p>
                             </div>
                             <div class="col-sm-6">
-                                <p class="text-center">Take action</p>
+                                <p class="text-center">{translate('takeAction')}</p>
                             </div>
                         </div>
                     </footer>

@@ -8,14 +8,31 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.btn--no-margin {
+  margin: 0 !important;
+}
+
 .search-address {
   position: absolute;
   top: 26px;
   right: -3px;
+  box-shadow: none !important;
+}
+
+.err-msg {
+  color: #b83104;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.selected-language {
+  color: rgb(38, 147, 230);
+  font-weight: bold;
 }
 
 .react-datepicker-wrapper {
   display: block !important;
+  z-index: 0;
 }
 .react-datepicker__input-container {
   width: 100%;
