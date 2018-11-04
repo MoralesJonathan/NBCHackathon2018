@@ -3,13 +3,13 @@ import React from 'react';
 class Navbar extends React.Component {
     render() {
         return (
-                <nav className="navbar navbar-light bg-light">
+                <nav className="navbar navbar-light">
                     <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <a className="navbar-brand" href="#">
-                        <img src="https://via.placeholder.com/50" style={{ 'marginRight': '15px' }} width="50" height="50" className="d-inline-block align-top" alt="" />
-                        Company Name
+                    <a className="navbar-brand" href="/">
+                        <img src="/tempLogo.png" style={{ 'marginRight': '15px' }} width="50" height="50" class="d-inline-block align-top" alt="" />
+                    Poder Vote
                     </a>
                     <form className="form-inline d-none d-lg-block">
                         <button className="btn btn-outline-secondary my-2 my-sm-0" type="submit">Settings</button>
@@ -21,10 +21,10 @@ class Navbar extends React.Component {
                                 <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
+                                <a className="nav-link" href="#">Profile</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link disabled" href="#">Disabled</a>
+                                <a className="nav-link" href="#">Settings</a>
                             </li>
                         </ul>
                     </div>

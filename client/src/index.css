@@ -8,10 +8,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+<<<<<<< HEAD
 .btn--no-margin {
   margin: 0 !important;
 }
 
+=======
+#root {
+  position: relative;
+}
+>>>>>>> 4f9a9d2c04d6af8da734dee9b1a48c2c4a7fee48
 .search-address {
   position: absolute;
   top: 26px;
@@ -28,6 +34,22 @@ body {
 .selected-language {
   color: rgb(38, 147, 230);
   font-weight: bold;
+}
+
+.card {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+}
+
+#featuredImage {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10)
+}
+footer {
+  position: absolute;
+  bottom: -80px;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #f5f5f5;
 }
 
 .react-datepicker-wrapper {
@@ -80,7 +102,25 @@ canvas {
   margin-top: 10%;
 }
 
+.navbar {
+  padding: .5rem 4rem;
+}
 
+.text-featured {
+  color: #4294ff;
+}
+
+.text-subfeatured {
+  color: #cfdeef;
+}
+
+.btn-outline-takeAction {
+  border: 1px solid #007bff;
+}
+
+.btn-outline-takeAction:hover {
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}
 /* 
 ##Device = Desktops
 */
@@ -94,5 +134,10 @@ canvas {
       left:50%;
       transform: translate(-50%,-50%);
       width: 30%;
+  }
+}
+@media (max-width: 991px) {
+  .navbar{ 
+    padding: .5rem 1rem;
   }
 }

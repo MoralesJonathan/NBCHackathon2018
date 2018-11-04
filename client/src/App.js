@@ -135,6 +135,7 @@ class App extends Component {
         <div>
           <Route exact path="/createProfile" render={(props) => (<Profile {...props} switchLanguage={this.switchLanguage} translate={this.translate} handleProfile={this.handleProfile} handleInputChange={() => this.handleInputChange} />)} />
           <Route exact path="/register" render={(props) => (<Register {...props} errMsg={this.state.errMsg} translate={this.translate} handleRegister={this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
+          <Route exact path="/bill/:id" render={(props) => (<BillPage {...props} />)} />
           <Route exact path="/bill" render={(props) => (<BillPage translate={this.translate} {...props} />)} />
           <Route exact path="/home" render={(props) => (<LandingPage {...props} translate={this.translate} />)} />
           <Route exact path="/" render={(props) => (<Login {...props} errMsg={this.state.errMsg} translate={this.translate} handleLogin={this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />

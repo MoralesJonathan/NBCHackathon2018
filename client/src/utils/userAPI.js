@@ -19,9 +19,7 @@ export default {
       axios.post("/api/profile/", {...profile, json: true});
     });
   },
-  setProfile: function(profile) {
-    return new Promise((resolve, reject) => {
-      axios.get("/api/profile/new/", profile);
-    });
+  setProfile: function(userData) {
+    return axios.post("/api/profile/new")
   }
 };

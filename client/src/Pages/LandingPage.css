@@ -12,4 +12,41 @@
 
 #landingPageCard .card{
     padding: 50px 25px;
+    background-image: linear-gradient(to right, #b92b27, #1565c0);
+    border: none;
+}
+
+#landingPageCard .card .card-text {
+    color: white
+}
+
+.card {
+    margin: 15px 0;
+}
+
+.card-text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.css-1eitjko {
+    position: fixed!important;
+    top: 50%;
+    left: 50%;
+    z-index: 99999999;
+}
+.css-1eitjko:after {
+    content: "LOADING...";
+    position: absolute;
+    top: 40px;
+    left: -25px;
+}
+
+#loaderBG {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: white;
+    z-index: 9999999;
 }

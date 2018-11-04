@@ -6,48 +6,26 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    name: {
-        type: String,
-        required: true
-    },
-    dateOfBirth: {
+    dob: {
         type: Date,
         required: false
-    },
-    gender: {
-        type: String,
-        required: false,
-        maxlength : 1
-    },
-    zipCode: {
-        type: Number,
-        required: true,
-        maxlength: 5
     },
     phoneNumber: {
         type: Number,
         required: false,
         maxlength: 10
     },
-    email: {
+    address: {
         type: String,
         required: false
     },
-    streetAddress: {
-        type: String,
-        required: false
+    language:{
+        type:String, 
+        required:false
     },
-    city: {
+    interests: [{
         type: String,
-        required: false
-    },
-    state: {
-        type: String,
-        required: false,
-        maxlength: 2
-    },
-    
-    interests: [
+    }
     ]
 });
 module.exports = Profile = mongoose.model('profile', ProfileSchema)
