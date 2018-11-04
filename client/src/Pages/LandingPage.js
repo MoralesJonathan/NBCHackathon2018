@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from '../Components/Navbar/Navbar';
+import jwt_decode from 'jwt-decode'
 import axios from "axios";
 import { PropagateLoader } from 'react-spinners';
 import './LandingPage.css'
@@ -10,6 +11,7 @@ class LandingPage extends Component {
         this.state = {
             featuredBill: {},
             bills: [],
+            firstName: '',
             loading: true
         }
         this.onLogout = this.onLogout.bind(this);
@@ -24,9 +26,13 @@ class LandingPage extends Component {
     }
     componentDidMount() {
         let options = { state: 'fl', issues: ['guns', 'healthcare', 'education'] };
-        if(localStorage.getItem("language") == "spanish"){
+        if (localStorage.getItem("language") == "spanish") {
             options.lang = "es";
         }
+        let token = localStorage.getItem("jwtToken")
+        token = jwt_decode(token);
+        console.log(this.props)
+        // this.setState({firstName: token})
         axios.post("/api/ballot/issues/", options)
             .then((response) => {
                 console.log(response)
@@ -55,7 +61,7 @@ class LandingPage extends Component {
         }
         return grid
     }
-    saveTitle(bill){
+    saveTitle(bill) {
         localStorage.setItem('billTitle', bill.title);
         localStorage.setItem('billDescription', bill.summary);
         window.location.href = "/bill/" + bill.id;
@@ -66,14 +72,19 @@ class LandingPage extends Component {
             transitionName: "fade",
             transitionEnterTimeout: 500,
             transitionLeaveTimeout: 500
-          }
-          
+        }
+
         return (
             <div>
-                <Navbar logout={this.onLogout}/>
+                <Navbar logout={this.onLogout} />
                 <div id="landingPageCard">
                     <div className="card">
                         <div className="card-body">
+                            {/* <div class="row">
+                                <div class="col-sm-12">
+                                    <h2 id="welcomeMessage">Welcome back {this.state.firstName}!</h2>
+                                </div>
+                            </div> */}
                             <div className="row">
                                 <div className="col-md-8 col-12">
                                     <h1 className="card-title text-featured">{this.state.featuredBill.title}</h1>
@@ -84,6 +95,11 @@ class LandingPage extends Component {
                                     <img id="featuredImage" src="/voteHeader.png" with="400" height="200"></img>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="col-sm-12" style={{paddingLeft:'0'}}>
+                                    <button style={{backgroundColor:'transparent', color: 'white'}} onClick={this.saveTitle.bind(this, this.state.featuredBill)} type="button" className="btn btn-outline-takeAction">View ballot</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,12 +107,12 @@ class LandingPage extends Component {
                     <div id="loaderBG"> </div>
                 }
                 <PropagateLoader
-                        style={{zIndex: 10000}}
-                        sizeUnit={"px"}
-                        size={15}
-                        color={'#123abc'}
-                        loading={this.state.loading}
-                    />
+                    style={{ zIndex: 10000 }}
+                    sizeUnit={"px"}
+                    size={15}
+                    color={'#123abc'}
+                    loading={this.state.loading}
+                />
                 <div className="container" id="cards-container">
 
                     {this.loadCards()}

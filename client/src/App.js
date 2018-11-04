@@ -149,7 +149,7 @@ class App extends Component {
           <Route exact path="/register" render={(props) => (<Register {...props} errMsg={this.state.errMsg} translate={this.translate} handleRegister={this.handleRegister} handleInputChange={() => this.handleInputChange} />)} />
           <Route exact path="/bill/:id" render={(props) => (<BillPage translate={this.translate} {...props} />)} />
           <Route exact path="/takeaction/:id" render={(props) => (<ActionPage {...props} />)} />
-          <Route exact path="/home" render={(props) => (<LandingPage {...props} translate={this.translate} />)} />
+          <Route exact path="/home" render={(props) => (<LandingPage {...props} userInfo= {this.state.profile} translate={this.translate} />)} />
           <Route exact path="/" render={(props) => (<Login {...props} errMsg={this.state.errMsg} translate={this.translate} handleLogin={this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
           <Switch>
             {this.state.redirectToProfile && <Redirect to='/createProfile'/>}
