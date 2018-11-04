@@ -27,14 +27,14 @@ function finalProcessing(arr) {
                 id: parsed.id,
                 billId: parsed.billId,
                 pdf: parsed.versions.url,
-                url: parsed.sources[0].url, 
-                summary:''
+                url: parsed.sources[0].url,
+                summary: ''
             }
             axios.get(payload.url).then((result) => {
                 let $ = cheerio.load(result.data);
                 const summary = $('.width80').text();
                 console.log(summary);
-                payload.summary= summary;
+                payload.summary = summary;
                 resolve(payload);
             })
         });
@@ -47,7 +47,7 @@ router.post('/issues', (req, res) => {
     const requests = [];
     issues.map((element) => {
         const options = {
-            url: `https://openstates.org/api/v1/bills/?state=${state}&q=${element}&apikey=${googleKey.openBallot}&per_page=5`
+            url: `https://openstates.org/api/v1/bills/?state=${state}&q=${element}&apikey=${googleKey.openBallot}&per_page=3`
         }
         requests.push(options);
     });
@@ -56,20 +56,22 @@ router.post('/issues', (req, res) => {
         .then((allResults) => {
             const billIds = [];
             allResults.map((element) => {
-                const parsed = (JSON.parse(element))[0];
-                const billId = parsed['id'];
-                const queryId = encodeURI(billId);
-                const options = { url: `https://openstates.org/api/v1/bills/${queryId}?apikey=${googleKey.openBallot}` }
-                billIds.push(options);
+                const parsed = (JSON.parse(element));
+                parsed.map((element) => {
+                    const billId = element['id'];
+                    const queryId = encodeURI(billId);
+                    const options = { url: `https://openstates.org/api/v1/bills/${queryId}?apikey=${googleKey.openBallot}` }
+                    billIds.push(options);
+                });
             })
             Promise.all(requestQueue(billIds))
-            .then((allResults2) => {
-                const finalArray = [];
-                Promise.all(finalProcessing(allResults2))
-                .then((finalResults)=>{
-                    res.status(200).send(finalResults)
+                .then((allResults2) => {
+                    const finalArray = [];
+                    Promise.all(finalProcessing(allResults2))
+                        .then((finalResults) => {
+                            res.status(200).send(finalResults)
+                        })
                 })
-            })
         }).catch((err) => {
             console.log(err);
         })
