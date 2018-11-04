@@ -21,38 +21,40 @@ class BillPage extends Component {
                 <div class="container" id="billInfo">
                     <div class="row justify-content-sm-center">
                         <div class="col-sm-12 ">
-                            <div class="text-center">{this.state.title}</div>
+                            <h1 class="text-center">{this.state.title}</h1>
                         </div>
                     </div>
                     <div class="row justify-content-sm-center">
                         <div class="col-sm-12 ">
-                            <div class="text-center">{this.state.billNumber}</div>
+                            <h3 class="text-center">{this.state.billNumber}</h3>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 ">
-                            <div class="text-justify">{this.state.description}</div>
+                            <div class="text-justify" id="billDescription">{this.state.description}</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <p>Potential Side effects:</p>
+                            <h5>Potential Side effects:</h5>
+                            <p>56% cloudy with a chance of meatballs.</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>In the media:</p>
+                            <h5>In the media:</h5>
+                            <p>Not yet...</p>
                         </div>
                     </div>
-                    <footer class="footer">
+                </div>
+                <footer class="footer">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" id="ignoreButton">
                                 <p class="text-center">Ignore</p>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" id="actionButton">
                                 <p class="text-center">Take action</p>
                             </div>
                         </div>
                     </footer>
-                </div>
             </div>
         );
     }
