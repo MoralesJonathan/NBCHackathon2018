@@ -71,7 +71,7 @@ router.post('/issues', (req, res) => {
                     Promise.all(finalProcessing(allResults2))
                         .then((finalResults) => {
                             if (lang) {
-                                finalResults= finalResults.map((element) => {
+                                finalResults = finalResults.map((element) => {
                                     for (key in element) {
                                         element.key = translate(element.key);
                                     }
@@ -85,5 +85,30 @@ router.post('/issues', (req, res) => {
             console.log(err);
         })
 });
+
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    const options = { url: `https://openstates.org/api/v1/bills/${id}?apikey=${googleKey.openBallot}` }
+    
+    request.get(options, (err,data)=>{
+        const parsed = JSON.parse(data.body); 
+        console.log(parsed);
+        let url =parsed.versions[0].url;
+        let subjects=parsed.scraped_subjects;
+        let urlArr= url.split("/");
+        urlArr.splice(urlArr.indexOf('Filed'));
+        urlArr.push('PDF');
+        urlArr=urlArr.map(element => {
+             return element+'/'
+        });
+        const pdf = urlArr.join('');
+        res.status(200).send({
+            pdf,
+            subjects
+        })
+
+    })
+})
 
 module.exports = router;

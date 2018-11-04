@@ -66,6 +66,7 @@ class LandingPage extends Component {
                     </div>
                 </div>
                 <PacmanLoader
+                        style={{zIndex: 10000}}
                         sizeUnit={"px"}
                         size={100}
                         color={'#123abc'}
