@@ -22,13 +22,45 @@ router.get('/address/:address', (req, res) => {
                 (err, result2) => {
                     if (err) { console.log(err) }
                     const repArray = JSON.parse(result2.body);
+                    console.log(repArray);
                     const names = [];
                     repArray.map((element) => {
-                        names.push(element.full_name);
+                        names.push(
+                            {
+                                name: element.full_name,
+                                photo: element.photo_url,
+                                party: element.party,
+                                email: element.email,
+                                district: element.district
+                            });
                     });
-                    res.status(200).send(names);
+
+                    const bigBoy = {
+                        reps: names
+                    }
+                    res.status(200).send(bigBoy)
+                    // console.log(`https://civicinfoapi.votinginfoproject.org/?&address=${encodeURI(address)}`);
+
+                    //     var options = {
+                    //         url: `https://civicinfoapi.votinginfoproject.org/?&address=${encodeURI(address)}`,
+                    //         headers: {
+                    //             'User-Agent': 'request',
+                    //             'Orgin':'http://localhost:5001'
+                    //         }
+                    //     };
+                    //     request.get(options,
+                    //         (err, response2) => {
+                    //             if (err) { console.log(err); }
+                    //             console.log(response2);
+                    //             const { address, notes, pollingHours } = response2.data.pollingLocations;
+                    //             const bigBoy = {
+                    //                 reps: names,
+                    //                 votingInfo: { address, notes, pollingHours }
+                    //             }
+                    //             res.status(200).send(bigBoy)
+                    //         })
+                    // })
                 })
-            // res.status(200).send(latlng);
         })
 });
 
