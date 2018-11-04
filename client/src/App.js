@@ -125,7 +125,7 @@ class App extends Component {
       localStorage.setItem('address',profileInfo.address);
       localStorage.setItem('language',profileInfo.language);
       API.setProfile(profileInfo).then(res => {
-        this.setState({profile: profileInfo, isLoggedIn: true, redirectToProfile: false});
+        this.setState({profile: profileInfo, isLoggedIn: true, redirect: true, redirectToProfile: false});
       }).catch(err => console.log(err));
     }
     else{
@@ -152,7 +152,7 @@ class App extends Component {
           <Route exact path="/" render={(props) => (<Login {...props} errMsg={this.state.errMsg} translate={this.translate} handleLogin={this.handleLogin} handleInputChange={() => this.handleInputChange} />)} />
           <Switch>
             {this.state.redirectToProfile && <Redirect to='/createProfile'/>}
-            {this.state.isLoggedIn && <Redirect to="/home" />}
+            {(this.state.isLoggedIn && this.state.redirect) && <Redirect to="/home" />}
             {!this.state.isLoggedIn && <Redirect to="/" />}
           </Switch>
         </div>
