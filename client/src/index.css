@@ -8,16 +8,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-<<<<<<< HEAD
 .btn--no-margin {
   margin: 0 !important;
 }
 
-=======
 #root {
   position: relative;
 }
->>>>>>> 4f9a9d2c04d6af8da734dee9b1a48c2c4a7fee48
 .search-address {
   position: absolute;
   top: 26px;
