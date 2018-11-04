@@ -23,7 +23,7 @@ mongoose
         console.log('MongoDB Connected');
     })
     .catch(err => console.log(err));
-
+app.use(express.static('../../'))
 app.use('/api/users', users);
 // Use routes
 app.use('/api/profile', profile);
