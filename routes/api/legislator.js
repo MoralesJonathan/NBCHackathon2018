@@ -22,16 +22,14 @@ router.get('/address/:address', (req, res) => {
                 (err, result2) => {
                     if (err) { console.log(err) }
                     const repArray = JSON.parse(result2.body);
-                    
+                    const names = [];
                     repArray.map((element) => {
-                        console.log(element.full_name);
+                        names.push(element.full_name);
                     });
-                    res.status(200).send(result2.body);
+                    res.status(200).send(names);
                 })
             // res.status(200).send(latlng);
         })
 });
-
-router.get('//:')
 
 module.exports = router;
