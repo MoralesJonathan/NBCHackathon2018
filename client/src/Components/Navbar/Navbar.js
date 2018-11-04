@@ -7,13 +7,17 @@ class Navbar extends React.Component {
                     <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <a className="navbar-brand" href="/">
+                    <a className="navbar-brand" href="/home">
                         <img src="/tempLogo.png" style={{ 'marginRight': '15px' }} width="50" height="50" class="d-inline-block align-top" alt="" />
                     Poder Vote
                     </a>
                     <form className="form-inline d-none d-lg-block">
                         <button className="btn btn-outline-secondary my-2 my-sm-0" type="submit">Settings</button>
-                        <button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.props.logout}>Logout</button>
+                        <button className="btn btn-outline-primary my-2 my-sm-0" onClick={(evt)=>{
+                            evt.preventDefault();
+                            localStorage.removeItem("jwtToken");
+                            window.location.reload();
+                        }}>Logout</button>
                     </form>
                     <div className="collapse navbar-collapse" id="navbarToggler">
                         <ul className="navbar-nav mr-auto mt-2 mt-lg-0 d-lg-none">

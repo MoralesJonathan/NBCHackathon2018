@@ -84,10 +84,10 @@ class BillPage extends Component {
                                 {
                                     this.state.pageNumber > 1 ? (
                                         <div>
-                                            <button type="button" class="btn btn-light" onClick={this.decreasePageNumber}> &lt; Previous Page </button>
-                                            <button type="button" class="btn btn-light" onClick={this.increasePageNumber}> Next Page &gt; </button>
+                                            <button type="button" class="btn btn-light" onClick={this.decreasePageNumber}> &lt; {translate('previous')} Page </button>
+                                            <button type="button" class="btn btn-light" onClick={this.increasePageNumber}> {translate('next')} Page &gt; </button>
                                         </div>) : (
-                                            <button type="button" onClick={this.increasePageNumber} class="btn btn-light"> Next Page > </button>
+                                            <button type="button" onClick={this.increasePageNumber} class="btn btn-light"> {translate('next')} Page > </button>
                                     )
                                 }
                             </center>
@@ -95,22 +95,22 @@ class BillPage extends Component {
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <h5>Potential Side effects:</h5>
+                            <h5>{translate('sideEffects')}</h5>
                             <img style={{ "max-width": "100%" }} src="/tempGraph.png"></img>
                         </div>
                         <div class="col-sm-6">
-                            <h5>In the media:</h5>
+                            <h5>{translate('media')}</h5>
                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     {this.state.slides}
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
+                                    <span class="sr-only">{translate('previous')}</span>
                                 </a>
                                 <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
+                                    <span class="sr-only">{translate('next')}</span>
                                 </a>
                             </div>
                         </div>

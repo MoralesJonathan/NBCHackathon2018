@@ -6,46 +6,19 @@ import './ActionPage.css';
 class ActionPage extends Component {
     constructor(props) {
         super(props);
+        const address = localStorage.getItem("address") ? encodeURI(localStorage.getItem("address")) : '33185';
         this.state = {
+            address: address,
             loading: true,
             reps: [],
             title: "Make hackathons great again",
             billNumber: this.props.match.params.id,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus massa. Aliquam commodo at nisi sed facilisis. Suspendisse varius nulla id maximus convallis. Fusce in luctus metus. Proin et ipsum ut lacus euismod dapibus. Nam rhoncus, turpis vel sodales ornare, arcu magna tempus est, laoreet ullamcorper dolor justo et dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed pulvinar in enim eget tempor. Morbi urna velit, feugiat id erat nec, viverra tempor lorem. Vestibulum in vehicula odio, et dapibus augue. Cras ornare mauris at interdum mattis. Curabitur posuere volutpat lobortis. Sed tempus sapien pretium, pharetra lectus eu, molestie nunc. Maecenas euismod diam eu viverra luctus.\nCurabitur vitae pulvinar lacus. Sed dictum massa id ligula rutrum consectetur. Cras sit amet urna nibh. Suspendisse at auctor nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ullamcorper ante libero, nec faucibus odio consectetur vel. Aliquam commodo faucibus tortor vitae sodales. Nulla sit amet leo ut eros tristique varius a vel nibh.\nDonec a felis sit amet tortor venenatis bibendum. Sed gravida elit sit amet metus feugiat efficitur. Integer sed facilisis massa. Aenean sollicitudin aliquet erat, sit amet mattis tellus iaculis nec. Duis felis dolor, lobortis at scelerisque quis, rutrum ac augue. Maecenas lobortis nec neque in ornare. In aliquet lorem non eros faucibus bibendum. Morbi semper eros est, a blandit arcu auctor et. Donec cursus blandit convallis. Curabitur cursus imperdiet sem, ut hendrerit tellus dictum et. Aenean vestibulum dui hendrerit bibendum dapibus. Suspendisse potenti. Nunc varius erat sit amet vestibulum pharetra. Quisque id volutpat lacus. Suspendisse efficitur magna et orci tempor, sed viverra erat euismod."
         }
     }
     componentDidMount() {
-        let mockResponse = {"reps":[
-            {
-                "name": "Jerry Hill",
-                "photo": "https://senate.ca.gov/sites/senate.ca.gov/files/senator_photos/senator_hill.jpg",
-                "party": "Democratic",
-                "email": "senator.hill@sen.ca.gov",
-                "district": "13"
-            },
-            {
-                "name": "Marc Berman",
-                "photo": "https://assembly.ca.gov/sites/assembly.ca.gov/files/memberphotos/ad24_berman_roster150_20161205.jpg",
-                "party": "Democratic",
-                "email": "assemblymember.berman@assembly.ca.gov",
-                "district": "24"
-            }
-        ],
-            "votingInfo":{
-                
-                "address": {
-                "locationName": "Coral Way K-8 Center",
-                "line1": "1950 SW 13 Ave",
-                "city": "Miami",
-                "state": "FL",
-                "zip": "33145"
-                    },
-            "notes": "Late activation 2pm",
-            "pollingHours": "7:00AM to 7:00PM",
-                }
-        };
-
-        this.setState({reps: mockResponse.reps, loading: false});
+        axios.get(`/api/legislator/address/${this.state.address}`).then((data)=>{
+            this.setState({reps: data.data.reps, loading: false});
+        })
 
     }
     createCard(data){
@@ -56,8 +29,9 @@ class ActionPage extends Component {
                 <div className="card-body">
                     <h3 className="card-title text-primary">{data.name}</h3>  
                     <p className="card-text card-text-overflow" style={{ 'display': '-webkit-box', '-webkit-line-clamp': '4', '-webkit-box-orient': 'vertical' }}>{`${data.party} Party, District ${data.district}`}</p>
-                    <div className="d-none d-md-block">
-                        <button className="btn btn-outline-takeAction">Email</button>
+                    <div>
+                        <a href={`mailto:${data.email}`}><button className="btn btn-outline-takeAction">Email</button></a>
+                        <a href={`mailto:${data.email}`}><button className="btn btn-outline-takeAction">Twitter</button></a>
                     </div>
                 </div>
             </div>
@@ -87,23 +61,18 @@ class ActionPage extends Component {
         return (
             <div>
                 <Navbar />
-                <div class="container" id="billInfo">
+                <div className="container" id="billInfo">
                 {this.state.loading &&
                     <div id="loaderBG"> </div>
                 }
-                    <div class="row justify-content-sm-center">
-                        <div class="col-sm-12 ">
-                            <h1 class="text-center">{this.state.title}</h1>
+                    <div className="row justify-content-sm-center">
+                        <div className="col-sm-12 ">
+                            <h1 className="text-center">{this.state.title}</h1>
                         </div>
                     </div>
-                    <div class="row justify-content-sm-center">
-                        <div class="col-sm-12 ">
-                            <h3 class="text-center">#{this.state.billNumber}</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 ">
-                            <div class="text-justify" id="billDescription">{this.state.description}</div>
+                    <div className="row justify-content-sm-center">
+                        <div className="col-sm-12 ">
+                            <h3 className="text-center">#{this.state.billNumber}</h3>
                         </div>
                     </div>
                     {this.LoadRepCards()}
