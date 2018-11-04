@@ -8,7 +8,74 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.search-address {
+  position: absolute;
+  top: 26px;
+  right: -3px;
+}
+
+.react-datepicker-wrapper {
+  display: block !important;
+}
+.react-datepicker__input-container {
+  width: 100%;
+}
+.dob-datepicker {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+canvas {
+  margin: 0 auto;
+  display:block;
+  background: rgb(33,36,50);
+  position: fixed;
+  z-index: -1;
+}
+
+.loginContainer, .registerContainer {
+  position: absolute;
+  top: 25%;
+}
+
+#loginLogo {
+  padding-left: 65px;
+  padding-right: 50px;
+  margin-bottom: 25px;
+  width: 90%;
+}
+
+.profileContainer {
+  margin-top: 10%;
+}
+
+
+/* 
+##Device = Desktops
+*/
+
+@media (min-width: 1025px) {
+  .profileContainer {
+    width: 30%;
+  }
+  .loginContainer, .registerContainer {
+      top: 50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      width: 30%;
+  }
 }

@@ -138,7 +138,7 @@ class Register extends Component {
               <label htmlFor="exampleInputPassword1">Password</label>
               <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder="Password" />
             </div>
-            <button type="submit" onClick={this.props.handleRegister()} className="btn btn-primary">Register</button>
+            <button type="submit" onClick={this.props.handleRegister} className="btn btn-primary">Register</button>
           </form>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default {
-  login: function (loginData) {
+  getFeeds: function (limit) {
     return axios.post("/api/users/login/", loginData)
   },
   register: function (loginData) {

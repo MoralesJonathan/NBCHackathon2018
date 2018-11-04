@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const { posts, profile, users, legislator, ballot } = require('./routes/api');
 
-
 // Base requirements
 const app = express();
 const PORT = process.env.port || 5001;
@@ -20,7 +19,9 @@ const db = require('./config/keys').mongoURI;
 // Connect to MongoDB 
 mongoose
     .connect(db)
-    .then(() => console.log('MongoDB Connected'))
+    .then(() => {
+        console.log('MongoDB Connected');
+    })
     .catch(err => console.log(err));
 
 app.use('/api/users', users);
