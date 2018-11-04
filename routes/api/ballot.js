@@ -47,7 +47,7 @@ router.post('/issues', (req, res) => {
     const requests = [];
     issues.map((element) => {
         const options = {
-            url: `https://openstates.org/api/v1/bills/?state=${state}&q=${element}&apikey=${googleKey.openBallot}&per_page=1`
+            url: `https://openstates.org/api/v1/bills/?state=${state}&q=${element}&apikey=${googleKey.openBallot}&per_page=5`
         }
         requests.push(options);
     });

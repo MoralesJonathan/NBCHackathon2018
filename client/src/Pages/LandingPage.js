@@ -46,7 +46,7 @@ class LandingPage extends Component {
             <div>
                 <Navbar/>
                 <div id="landingPageCard">
-                    <div class="card">
+                    <div class="card" style={{borderRadius:'0px'}}>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-8 col-12">
