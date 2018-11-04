@@ -121,7 +121,7 @@ class App extends Component {
 
   handleProfile = (profileInfo) => {
     console.log('profileInfo: ', profileInfo);
-    if (profileInfo.address && profileInfo.dob) {
+    if (profileInfo.address && profileInfo.language) {
       localStorage.setItem('address',profileInfo.address);
       localStorage.setItem('language',profileInfo.language);
       API.setProfile(profileInfo).then(res => {
@@ -129,7 +129,7 @@ class App extends Component {
       }).catch(err => console.log(err));
     }
     else{
-      alert("Address and date of birth are required fields");
+      alert("Address and language are required fields");
     }
   }
 
