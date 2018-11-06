@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Login.css'
-import { Link } from "react-router-dom";
 import Particles from 'react-particles-js';
 
 const particlesOpt = {
@@ -114,7 +113,7 @@ const particlesOpt = {
   "retina_detect": true
 }
 
-class Login extends Component {
+class Register extends Component {
 
   render() {
     const translate = this.props.translate;
@@ -124,22 +123,23 @@ class Login extends Component {
           <Particles params={particlesOpt} />
         </div>
 
-        <div id="loginArea" className="container jumbotron loginContainer">
+        <div id="RegisterArea" className="container jumbotron registerContainer">
           <form>
             <img id="loginLogo" src={'http://www.nbcumedialabs.com/static/img/logo-dark-1.png'} alt="logo"></img>
             <div className="form-group">
-              <label htmlFor="exampleInputEmail1">{translate('email')}</label>
-              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder={translate("emailPlaceholder")} />
+              <label htmlFor="exampleInputName1">{translate('name')}</label>
+              <input type="text" className="form-control" name="name" onChange={this.props.handleInputChange()} placeholder={translate('fullName')} />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputPassword1">{translate("password")}</label>
-              <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder={translate("password")} />
+              <label htmlFor="exampleInputEmail1">{translate('email')}</label>
+              <input type="text" className="form-control" name="email" onChange={this.props.handleInputChange()} placeholder={translate('emailPlaceholder')} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1">{translate('password')}</label>
+              <input type="password" className="form-control" name="password" onChange={this.props.handleInputChange()} placeholder={translate('password')} />
             </div>
             {this.props.errMsg && <div style={{marginBottom: '18px'}}><span className='err-msg'>* {this.props.errMsg}</span></div>}
-            <button type="submit" onClick={this.props.handleLogin} className="btn btn-primary btn--no-margin">{translate("login")}</button>
-            <p style={{float:'right'}}>
-              <Link to='/register'>{translate('signup')}</Link>
-            </p>
+            <button type="submit" onClick={this.props.handleRegister} className="btn btn-primary btn--no-margin">{translate('register')}</button>
           </form>
         </div>
       </div>
@@ -147,4 +147,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;
